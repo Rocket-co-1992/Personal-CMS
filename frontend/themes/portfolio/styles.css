@@ -99,3 +99,71 @@ section#teams h3, section#teams p {
         flex: 1 1 100%;
     }
 }
+
+/* Estilos para a loja online */
+#shop ul, #cart ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#shop li, #cart li {
+    background-color: #f9f9f9;
+    margin: 0.5em 0;
+    padding: 1em;
+    border: 1px solid #ddd;
+}
+
+#shop img, #cart img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+#shop h3, #cart h3 {
+    margin: 0.5em 0;
+}
+
+#shop p, #cart p {
+    margin: 0.5em 0;
+}
+
+#shop button, #cart button {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+#shop button:hover, #cart button:hover {
+    background-color: #2c3e50;
+}
+
+#checkout form {
+    margin-bottom: 2em;
+}
+
+#checkout label {
+    display: block;
+    margin-top: 1em;
+}
+
+#checkout input {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+#checkout button {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+#checkout button:hover {
+    background-color: #2c3e50;
+}

@@ -10,7 +10,11 @@
                 <h3>{{ product.name }}</h3>
                 <p>{{ product.description }}</p>
                 <p>Price: ${{ product.price }}</p>
-                <button>Add to Cart</button>
+                <form method="post" action="cart_add.php">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="number" name="quantity" value="1" min="1">
+                    <button type="submit">Add to Cart</button>
+                </form>
             </li>
         {% endfor %}
     </ul>
