@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em;
+    text-align: center;
+}
+
+main {
+    padding: 1em;
+}
+
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+form {
+    margin-bottom: 2em;
+}
+
+label {
+    display: block;
+    margin-top: 1em;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    margin: 0.5em 0;
+    padding: 1em;
+    border: 1px solid #ddd;
+}
+
+section#teams ul, section#gallery ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+section#teams li, section#gallery li {
+    flex: 1 1 calc(33.333% - 1em);
+    box-sizing: border-box;
+}
+
+section#teams img, section#gallery img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+section#teams h3, section#teams p {
+    margin: 0.5em 0;
+}

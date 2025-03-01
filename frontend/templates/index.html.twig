@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<section id="slider">
+    {{ sliderContent|raw }}
+</section>
+<section id="teams">
+    <h2>Our Team</h2>
+    <ul>
+        {% for member in teamMembers %}
+            <li>
+                <img src="{{ member.image }}" alt="{{ member.name }}">
+                <h3>{{ member.name }}</h3>
+                <p>{{ member.role }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<section id="news">
+    <h2>Latest News</h2>
+    <ul>
+        {% for news in newsList %}
+            <li>
+                <h3>{{ news.title }}</h3>
+                <p>{{ news.content }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<section id="gallery">
+    <h2>Gallery</h2>
+    <ul>
+        {% for image in galleryImages %}
+            <li><img src="{{ image.path }}" alt="Gallery Image"></li>
+        {% endfor %}
+    </ul>
+</section>
+<section id="contact">
+    <h2>Contact Us</h2>
+    <form method="post" action="contact_submit.php">
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="5" required></textarea>
+        <br>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+{% endblock %}
