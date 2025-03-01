@@ -22,6 +22,10 @@ if (!isset($_SESSION['user'])) {
         <li><a href="themes.php">Manage Themes</a></li>
         <li><a href="users.php">Manage Users</a></li>
         <li><a href="contact_messages.php">View Contact Messages</a></li>
+        <li><a href="products.php">Manage Products</a></li>
+        <li><a href="categories.php">Manage Categories</a></li>
+        <li><a href="orders.php">Manage Orders</a></li>
+        <li><a href="cart.php">View Cart</a></li>
         <li><a href="logout.php">Logout</a></li>
     </ul>
 </body>
