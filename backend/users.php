@@ -8,9 +8,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 require 'functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-    $role = $_POST['role'];
+    $username = sanitizeInput($_POST['username']);
+    $password = password_hash(sanitizeInput($_POST['password']), PASSWORD_BCRYPT);
+    $role = sanitizeInput($_POST['role']);
     createUser($username, $password, $role);
     header('Location: users.php');
     exit;
@@ -45,7 +45,7 @@ $users = getUsers();
     <h2>Existing Users</h2>
     <ul>
         <?php foreach ($users as $user): ?>
-            <li><?php echo $user['username']; ?> (<?php echo $user['role']; ?>)</li>
+            <li><?php echo htmlspecialchars($user['username']); ?> (<?php echo htmlspecialchars($user['role']); ?>)</li>
         <?php endforeach; ?>
     </ul>
     <a href="dashboard.php">Back to Dashboard</a>

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Invalid CSRF token');
     }
     if (isset($_POST['delete'])) {
-        deleteImage($_POST['id']);
+        deleteImage(sanitizeInput($_POST['id']));
     } else {
         $image = $_FILES['image'];
         uploadImage($image);
@@ -43,9 +43,9 @@ $images = getImages();
     <ul>
         <?php foreach ($images as $image): ?>
             <li>
-                <img src="<?php echo $image['path']; ?>" alt="Image">
+                <img src="<?php echo htmlspecialchars($image['path']); ?>" alt="Image">
                 <form method="post" style="display:inline;">
-                    <input type="hidden" name="id" value="<?php echo $image['id']; ?>">
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($image['id']); ?>">
                     <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
                     <button type="submit" name="delete">Delete</button>
                 </form>

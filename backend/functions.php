@@ -4,6 +4,7 @@ require 'config.php';
 // Função para obter conteúdo de uma seção
 function getSectionContent($section) {
     global $pdo;
+    $section = sanitizeInput($section);
     $stmt = $pdo->prepare("SELECT content FROM sections WHERE name = ?");
     $stmt->execute([$section]);
     return $stmt->fetchColumn();
@@ -12,6 +13,8 @@ function getSectionContent($section) {
 // Função para atualizar o conteúdo de uma seção
 function updateSectionContent($section, $content) {
     global $pdo;
+    $section = sanitizeInput($section);
+    $content = sanitizeInput($content);
     $stmt = $pdo->prepare("UPDATE sections SET content = ? WHERE name = ?");
     $stmt->execute([$content, $section]);
 }
@@ -19,6 +22,7 @@ function updateSectionContent($section, $content) {
 // Função para autenticar usuário
 function authenticateUser($username, $password) {
     global $pdo;
+    $username = sanitizeInput($username);
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->execute([$username]);
     $user = $stmt->fetch();
@@ -31,6 +35,9 @@ function authenticateUser($username, $password) {
 // Função para criar um novo usuário
 function createUser($username, $password, $role) {
     global $pdo;
+    $username = sanitizeInput($username);
+    $password = password_hash($password, PASSWORD_BCRYPT);
+    $role = sanitizeInput($role);
     $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (?, ?, ?)");
     $stmt->execute([$username, $password, $role]);
 }
@@ -46,6 +53,7 @@ function getUsers() {
 // Função para atualizar o tema atual
 function updateTheme($theme) {
     global $pdo;
+    $theme = sanitizeInput($theme);
     $stmt = $pdo->prepare("UPDATE settings SET value = ? WHERE name = 'theme'");
     $stmt->execute([$theme]);
 }
@@ -61,6 +69,9 @@ function getCurrentTheme() {
 // Função para salvar um tema
 function saveTheme($name, $cssContent, $structure) {
     global $pdo;
+    $name = sanitizeInput($name);
+    $cssContent = sanitizeInput($cssContent);
+    $structure = sanitizeInput($structure);
     $stmt = $pdo->prepare("INSERT INTO themes (name, css_content, structure) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE css_content = VALUES(css_content), structure = VALUES(structure)");
     $stmt->execute([$name, $cssContent, $structure]);
 }
@@ -76,6 +87,7 @@ function getThemes() {
 // Função para obter a estrutura de um tema
 function getThemeStructure($name) {
     global $pdo;
+    $name = sanitizeInput($name);
     $stmt = $pdo->prepare("SELECT structure FROM themes WHERE name = ?");
     $stmt->execute([$name]);
     return $stmt->fetchColumn();
@@ -84,6 +96,11 @@ function getThemeStructure($name) {
 // Função para validar e sanitizar entradas
 function sanitizeInput($input) {
     return htmlspecialchars(strip_tags(trim($input)));
+}
+
+// Função para validar um email
+function validateEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
 // Função para criar uma nova notícia
@@ -99,6 +116,7 @@ function createNews($title, $content, $url) {
 // Função para atualizar uma notícia
 function updateNews($id, $title, $content, $url) {
     global $pdo;
+    $id = sanitizeInput($id);
     $title = sanitizeInput($title);
     $content = sanitizeInput($content);
     $url = sanitizeInput($url);
@@ -138,6 +156,9 @@ function getContactMessages() {
 // Função para salvar uma mensagem de contato
 function saveContactMessage($name, $email, $message) {
     global $pdo;
+    $name = sanitizeInput($name);
+    $email = filter_var($email, FILTER_VALIDATE_EMAIL);
+    $message = sanitizeInput($message);
     $stmt = $pdo->prepare("INSERT INTO contact (name, email, message) VALUES (?, ?, ?)");
     $stmt->execute([$name, $email, $message]);
 }
@@ -145,6 +166,7 @@ function saveContactMessage($name, $email, $message) {
 // Função para atualizar uma mensagem de contato
 function updateContactMessage($id, $name, $email, $message) {
     global $pdo;
+    $id = sanitizeInput($id);
     $name = sanitizeInput($name);
     $email = filter_var($email, FILTER_VALIDATE_EMAIL);
     $message = sanitizeInput($message);
@@ -155,6 +177,7 @@ function updateContactMessage($id, $name, $email, $message) {
 // Função para deletar uma mensagem de contato
 function deleteContactMessage($id) {
     global $pdo;
+    $id = sanitizeInput($id);
     $stmt = $pdo->prepare("DELETE FROM contact WHERE id = ?");
     $stmt->execute([$id]);
 }
@@ -162,7 +185,7 @@ function deleteContactMessage($id) {
 // Função para fazer upload de uma imagem
 function uploadImage($image) {
     $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($image["name"]);
+    $targetFile = $targetDir . basename(sanitizeInput($image["name"]));
     move_uploaded_file($image["tmp_name"], $targetFile);
 }
 
@@ -177,6 +200,7 @@ function getImages() {
 // Função para deletar uma imagem da galeria
 function deleteImage($id) {
     global $pdo;
+    $id = sanitizeInput($id);
     $stmt = $pdo->prepare("DELETE FROM gallery WHERE id = ?");
     $stmt->execute([$id]);
 }
@@ -184,8 +208,10 @@ function deleteImage($id) {
 // Função para adicionar um novo membro da equipe
 function addTeamMember($name, $role, $image) {
     global $pdo;
+    $name = sanitizeInput($name);
+    $role = sanitizeInput($role);
     $targetDir = "uploads/";
-    $targetFile = $targetDir . basename($image["name"]);
+    $targetFile = $targetDir . basename(sanitizeInput($image["name"]));
     move_uploaded_file($image["tmp_name"], $targetFile);
     $stmt = $pdo->prepare("INSERT INTO teams (name, role, image) VALUES (?, ?, ?)");
     $stmt->execute([$name, $role, $targetFile]);
@@ -202,9 +228,12 @@ function getTeamMembers() {
 // Função para atualizar um membro da equipe
 function updateTeamMember($id, $name, $role, $image) {
     global $pdo;
+    $id = sanitizeInput($id);
+    $name = sanitizeInput($name);
+    $role = sanitizeInput($role);
     if ($image['name']) {
         $targetDir = "uploads/";
-        $targetFile = $targetDir . basename($image["name"]);
+        $targetFile = $targetDir . basename(sanitizeInput($image["name"]));
         move_uploaded_file($image["tmp_name"], $targetFile);
         $stmt = $pdo->prepare("UPDATE teams SET name = ?, role = ?, image = ? WHERE id = ?");
         $stmt->execute([$name, $role, $targetFile, $id]);
@@ -217,6 +246,7 @@ function updateTeamMember($id, $name, $role, $image) {
 // Função para deletar um membro da equipe
 function deleteTeamMember($id) {
     global $pdo;
+    $id = sanitizeInput($id);
     $stmt = $pdo->prepare("DELETE FROM teams WHERE id = ?");
     $stmt->execute([$id]);
 }
@@ -232,6 +262,7 @@ function createComment($content) {
 // Função para atualizar um comentário
 function updateComment($id, $content) {
     global $pdo;
+    $id = sanitizeInput($id);
     $content = sanitizeInput($content);
     $stmt = $pdo->prepare("UPDATE comments SET content = ? WHERE id = ?");
     $stmt->execute([$content, $id]);
@@ -240,6 +271,7 @@ function updateComment($id, $content) {
 // Função para deletar um comentário
 function deleteComment($id) {
     global $pdo;
+    $id = sanitizeInput($id);
     $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
     $stmt->execute([$id]);
 }

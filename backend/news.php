@@ -12,12 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die('Invalid CSRF token');
     }
     if (isset($_POST['delete'])) {
-        deleteNews($_POST['id']);
+        deleteNews(sanitizeInput($_POST['id']));
     } else {
-        $id = $_POST['id'];
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $url = $_POST['url'];
+        $id = sanitizeInput($_POST['id']);
+        $title = sanitizeInput($_POST['title']);
+        $content = sanitizeInput($_POST['content']);
+        $url = sanitizeInput($_POST['url']);
         if ($id) {
             updateNews($id, $title, $content, $url);
         } else {
@@ -57,13 +57,13 @@ $newsList = getNews();
     <ul>
         <?php foreach ($newsList as $news): ?>
             <li>
-                <h3><?php echo $news['title']; ?></h3>
-                <p><?php echo $news['content']; ?></p>
-                <p><a href="<?php echo $news['url']; ?>" target="_blank"><?php echo $news['url']; ?></a></p>
+                <h3><?php echo htmlspecialchars($news['title']); ?></h3>
+                <p><?php echo htmlspecialchars($news['content']); ?></p>
+                <p><a href="<?php echo htmlspecialchars($news['url']); ?>" target="_blank"><?php echo htmlspecialchars($news['url']); ?></a></p>
                 <form method="post" style="display:inline;">
                     <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
-                    <input type="hidden" name="id" value="<?php echo $news['id']; ?>">
-                    <button type="button" onclick="editNews(<?php echo $news['id']; ?>, '<?php echo $news['title']; ?>', '<?php echo $news['content']; ?>', '<?php echo $news['url']; ?>')">Edit</button>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($news['id']); ?>">
+                    <button type="button" onclick="editNews(<?php echo htmlspecialchars($news['id']); ?>, '<?php echo htmlspecialchars($news['title']); ?>', '<?php echo htmlspecialchars($news['content']); ?>', '<?php echo htmlspecialchars($news['url']); ?>')">Edit</button>
                     <button type="submit" name="delete">Delete</button>
                 </form>
             </li>

@@ -5,7 +5,7 @@ require 'cart_functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customer_name = sanitizeInput($_POST['customer_name']);
-    $customer_email = filter_var($_POST['customer_email'], FILTER_VALIDATE_EMAIL);
+    $customer_email = validateEmail($_POST['customer_email']);
     $total = sanitizeInput($_POST['total']);
     if ($customer_name && $customer_email && $total) {
         createOrder($customer_name, $customer_email, $total, 'Pending');

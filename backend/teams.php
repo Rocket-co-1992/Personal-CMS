@@ -7,13 +7,17 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 
 require 'functions.php';
 
+function sanitizeInput($data) {
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete'])) {
-        deleteTeamMember($_POST['id']);
+        deleteTeamMember(sanitizeInput($_POST['id']));
     } else {
-        $id = $_POST['id'];
-        $name = $_POST['name'];
-        $role = $_POST['role'];
+        $id = sanitizeInput($_POST['id']);
+        $name = sanitizeInput($_POST['name']);
+        $role = sanitizeInput($_POST['role']);
         $image = $_FILES['image'];
         if ($id) {
             updateTeamMember($id, $name, $role, $image);
@@ -53,12 +57,12 @@ $teamMembers = getTeamMembers();
     <ul>
         <?php foreach ($teamMembers as $member): ?>
             <li>
-                <img src="<?php echo $member['image']; ?>" alt="<?php echo $member['name']; ?>">
-                <h3><?php echo $member['name']; ?></h3>
-                <p><?php echo $member['role']; ?></p>
+                <img src="<?php echo htmlspecialchars($member['image']); ?>" alt="<?php echo htmlspecialchars($member['name']); ?>">
+                <h3><?php echo htmlspecialchars($member['name']); ?></h3>
+                <p><?php echo htmlspecialchars($member['role']); ?></p>
                 <form method="post" style="display:inline;">
-                    <input type="hidden" name="id" value="<?php echo $member['id']; ?>">
-                    <button type="button" onclick="editTeamMember(<?php echo $member['id']; ?>, '<?php echo $member['name']; ?>', '<?php echo $member['role']; ?>', '<?php echo $member['image']; ?>')">Edit</button>
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($member['id']); ?>">
+                    <button type="button" onclick="editTeamMember(<?php echo htmlspecialchars($member['id']); ?>, '<?php echo htmlspecialchars($member['name']); ?>', '<?php echo htmlspecialchars($member['role']); ?>', '<?php echo htmlspecialchars($member['image']); ?>')">Edit</button>
                     <button type="submit" name="delete">Delete</button>
                 </form>
             </li>

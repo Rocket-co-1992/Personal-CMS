@@ -20,7 +20,7 @@ $messages = getContactMessages();
     <h1>Manage Contact Messages</h1>
     <ul>
         <?php foreach ($messages as $message): ?>
-            <li><?php echo $message['name']; ?>: <?php echo $message['message']; ?></li>
+            <li><?php echo sanitizeInput($message['name']); ?>: <?php echo sanitizeInput($message['message']); ?></li>
         <?php endforeach; ?>
     </ul>
     <a href="dashboard.php">Back to Dashboard</a>
