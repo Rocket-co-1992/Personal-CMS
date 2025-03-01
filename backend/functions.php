@@ -58,18 +58,52 @@ function getCurrentTheme() {
     return $stmt->fetchColumn();
 }
 
+// Função para salvar um tema
+function saveTheme($name, $cssContent, $structure) {
+    global $pdo;
+    $stmt = $pdo->prepare("INSERT INTO themes (name, css_content, structure) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE css_content = VALUES(css_content), structure = VALUES(structure)");
+    $stmt->execute([$name, $cssContent, $structure]);
+}
+
+// Função para obter todos os temas
+function getThemes() {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT name FROM themes");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Função para obter a estrutura de um tema
+function getThemeStructure($name) {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT structure FROM themes WHERE name = ?");
+    $stmt->execute([$name]);
+    return $stmt->fetchColumn();
+}
+
 // Função para validar e sanitizar entradas
 function sanitizeInput($input) {
     return htmlspecialchars(strip_tags(trim($input)));
 }
 
 // Função para criar uma nova notícia
-function createNews($title, $content) {
+function createNews($title, $content, $url) {
     global $pdo;
     $title = sanitizeInput($title);
     $content = sanitizeInput($content);
-    $stmt = $pdo->prepare("INSERT INTO news (title, content) VALUES (?, ?)");
-    $stmt->execute([$title, $content]);
+    $url = sanitizeInput($url);
+    $stmt = $pdo->prepare("INSERT INTO news (title, content, url) VALUES (?, ?, ?)");
+    $stmt->execute([$title, $content, $url]);
+}
+
+// Função para atualizar uma notícia
+function updateNews($id, $title, $content, $url) {
+    global $pdo;
+    $title = sanitizeInput($title);
+    $content = sanitizeInput($content);
+    $url = sanitizeInput($url);
+    $stmt = $pdo->prepare("UPDATE news SET title = ?, content = ?, url = ? WHERE id = ?");
+    $stmt->execute([$title, $content, $url, $id]);
 }
 
 // Função para gerar um token CSRF
@@ -88,7 +122,7 @@ function validateCsrfToken($token) {
 // Função para obter todas as notícias
 function getNews() {
     global $pdo;
-    $stmt = $pdo->prepare("SELECT title, content FROM news");
+    $stmt = $pdo->prepare("SELECT id, title, content, url FROM news");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -185,5 +219,36 @@ function deleteTeamMember($id) {
     global $pdo;
     $stmt = $pdo->prepare("DELETE FROM teams WHERE id = ?");
     $stmt->execute([$id]);
+}
+
+// Função para criar um novo comentário
+function createComment($content) {
+    global $pdo;
+    $content = sanitizeInput($content);
+    $stmt = $pdo->prepare("INSERT INTO comments (content) VALUES (?)");
+    $stmt->execute([$content]);
+}
+
+// Função para atualizar um comentário
+function updateComment($id, $content) {
+    global $pdo;
+    $content = sanitizeInput($content);
+    $stmt = $pdo->prepare("UPDATE comments SET content = ? WHERE id = ?");
+    $stmt->execute([$content, $id]);
+}
+
+// Função para deletar um comentário
+function deleteComment($id) {
+    global $pdo;
+    $stmt = $pdo->prepare("DELETE FROM comments WHERE id = ?");
+    $stmt->execute([$id]);
+}
+
+// Função para obter todos os comentários
+function getComments() {
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, content FROM comments");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

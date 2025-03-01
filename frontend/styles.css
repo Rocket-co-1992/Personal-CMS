@@ -87,3 +87,45 @@ section#teams img, section#gallery img {
 section#teams h3, section#teams p {
     margin: 0.5em 0;
 }
+
+.social-share {
+    margin-top: 1em;
+}
+
+.social-share a {
+    margin-right: 1em;
+    text-decoration: none;
+    color: #4CAF50;
+}
+
+.social-share a:hover {
+    text-decoration: underline;
+}
+
+.youtube-video {
+    margin-top: 2em;
+    text-align: center;
+}
+
+.youtube-video iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+}    height: auto;    max-width: 100%;.map-container iframe {}    text-align: center;    margin-top: 2em;.map-container {#social-feeds {
+    margin-top: 2em;
+}
+
+.twitter-feed, .facebook-feed {
+    margin-bottom: 2em;
+}

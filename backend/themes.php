@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     header('Location: auth.php');
     exit;
 }
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-$themes = ['theme1', 'theme2'];
+$themes = array_merge(['theme1', 'theme2', 'theme3', 'theme4', 'business', 'portfolio', 'education', 'healthcare'], array_column(getThemes(), 'name'));
 $currentTheme = getCurrentTheme();
 ?>
 <!DOCTYPE html>

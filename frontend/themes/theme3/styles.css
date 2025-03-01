@@ -1,13 +1,13 @@
 body {
-    font-family: 'Helvetica Neue', sans-serif;
-    background-color: #ffffff;
-    color: #333333;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #007BFF;
+    background-color: #ff5722;
     color: white;
     padding: 1em;
     text-align: center;
@@ -18,7 +18,7 @@ main {
 }
 
 footer {
-    background-color: #007BFF;
+    background-color: #ff5722;
     color: white;
     text-align: center;
     padding: 1em;
@@ -43,7 +43,7 @@ input, textarea, select {
 }
 
 button {
-    background-color: #007BFF;
+    background-color: #ff5722;
     color: white;
     border: none;
     padding: 0.5em 1em;
@@ -52,7 +52,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #e64a19;
 }
 
 ul {
@@ -61,7 +61,7 @@ ul {
 }
 
 li {
-    background-color: #f8f9fa;
+    background-color: #fff;
     margin: 0.5em 0;
     padding: 1em;
     border: 1px solid #ddd;
@@ -86,4 +86,16 @@ section#teams img, section#gallery img {
 
 section#teams h3, section#teams p {
     margin: 0.5em 0;
+}
+
+@media (max-width: 768px) {
+    section#teams li, section#gallery li {
+        flex: 1 1 calc(50% - 1em);
+    }
+}
+
+@media (max-width: 480px) {
+    section#teams li, section#gallery li {
+        flex: 1 1 100%;
+    }
 }

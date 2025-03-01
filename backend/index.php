@@ -10,6 +10,8 @@ $contactContent = getSectionContent('contact');
 $teamMembers = getTeamMembers();
 $newsList = getNews();
 $galleryImages = getImages();
+$currentTheme = getCurrentTheme();
+$themeStructure = getThemeStructure($currentTheme);
 
 echo $twig->render('index.html.twig', [
     'sliderContent' => $sliderContent,
@@ -19,6 +21,8 @@ echo $twig->render('index.html.twig', [
     'contactContent' => $contactContent,
     'teamMembers' => $teamMembers,
     'newsList' => $newsList,
-    'galleryImages' => $galleryImages
+    'galleryImages' => $galleryImages,
+    'currentTheme' => $currentTheme,
+    'themeStructure' => $themeStructure
 ]);
 ?>
