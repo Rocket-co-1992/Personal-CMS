@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+main {
+    padding: 1rem;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+aside#sidebar {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    width: 200px;
+    float: left;
+}
+
+aside#sidebar nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+aside#sidebar nav ul li {
+    margin-bottom: 1rem;
+}
+
+aside#sidebar nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav#navbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav#navbar ul li {
+    float: left;
+}
+
+nav#navbar ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav#navbar ul li a:hover {
+    background-color: #111;
+}
+
+#customize-navbar {
+    margin-left: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#customize-navbar:hover {
+    background-color: #45a049;
+}
+
+#settings {
+    margin: 20px;
+}
+
+#settings-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#settings-form label {
+    margin: 5px 0;
+}
+
+#settings-form input {
+    margin: 5px 0 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#settings-form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#settings-form button:hover {
+    background-color: #45a049;
+}
+
+#profile {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+#profile h2 {
+    margin-top: 0;
+}
